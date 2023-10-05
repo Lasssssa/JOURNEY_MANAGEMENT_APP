@@ -4,7 +4,7 @@ int main(){
 
     cout << "coucou" << endl;
     //sdksqkfiodsjioiksoqdioqsj
-    smqldosqkfposdkfpodskfok
+    //smqldosqkfposdkfpodskfok
 
 
 //    lddskfjksdjfsdjf
