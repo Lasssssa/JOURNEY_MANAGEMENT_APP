@@ -19,15 +19,15 @@ class Trajet
 //----------------------------------------------------------------- PUBLIC
 public:
 //-----------------------------------------------------------------Méthodes publiques
-    virtual void Afficher();
+    virtual void Afficher() = 0;
     // Mode d'emploi : Affiche les éléments de l'ensemble
     // Contrat : Aucun
     //
-    virtual char* getVilleDepart();
+    virtual char* getVilleDepart() = 0;
     // Mode d'emploi : Renvoi la ville de départ
     // Contrat : Aucun
     //
-    virtual char* getVilleArrivee();
+    virtual char* getVilleArrivee() = 0;
     // Mode d'emploi : Renvoi la ville d'arrivée
     // Contrat : Aucun
     //

@@ -39,7 +39,7 @@ public:
 //    Mode d'emploi (constructeur de copie) :
 //    Contrat :
 
-     TrajetSimple (char* villeDepart, char* villeArrivee, char* moyenTransport);
+    TrajetSimple (const char* villeDepartConstruct,const char* villeArriveeConstruct, const char* moyenTransportConstruct);
     // Mode d'emploi (Constructeur par défaut) :
     // Contrat :
 

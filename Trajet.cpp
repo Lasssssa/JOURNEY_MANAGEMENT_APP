@@ -7,7 +7,6 @@ using namespace std;
 
 //------------------------------------------------------ Include personnel
 #include "Trajet.h"
-
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
@@ -18,6 +17,7 @@ using namespace std;
 // Présentation de l'algorithme
 //{
 //} //----- Fin de Méthode
+
 
 //------------------------------------------------- Surcharge d'opérateurs
 
@@ -32,7 +32,22 @@ using namespace std;
 //    // Code du constructeur de copie
 //} //----- Fin de Trajet (constructeur de copie)
 
+Trajet::Trajet ( )
+{
+#if defined (MAP) // MAP : Mise au point
+    cout << "Appel au constructeur de <Trajet>" << endl;
+#endif
+} //----- Fin de Trajet
 
+
+Trajet::~Trajet ( )
+// Algorithme :
+//
+{
+#if defined (MAP) // MAP : Mise au point
+    cout << "Appel au destructeur de <Trajet>" << endl;
+#endif
+} //----- Fin de ~Trajet
 
 //------------------------------------------------------------------ PRIVE
 

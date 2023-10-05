@@ -33,7 +33,6 @@ using namespace std;
 //} //----- Fin de TrajetCompose (constructeur de copie)
 
 
-
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées
