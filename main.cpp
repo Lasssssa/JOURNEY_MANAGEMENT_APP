@@ -1,14 +1,13 @@
 #include <iostream>
 
+//Initial commit : 1
+
+
 int main(){
 
     cout << "coucou" << endl;
     //sdksqkfiodsjioiksoqdioqsj
     //smqldosqkfposdkfpodskfok
-//hello
-
-//    lddskfjksdjfsdjf
-//sqdjsjfsodjf
 //hello
 
     return 0;
