@@ -18,14 +18,14 @@
 
 class Collection
 {
-//----------------------------------------------------------------- PUBLIC
+    //----------------------------------------------------------------- PUBLIC
 public:
-//-----------------------------------------------------------------Méthodes publiques
-    void AjouterDebut(Trajet* unTrajet);
+    //-----------------------------------------------------------------Méthodes publiques
+    void AjouterDebut(Trajet *unTrajet);
     // Mode d'emploi : Ajoute un trajet au début de la collection
     // Contrat : Aucun
 
-    void AjouterFin(Trajet* unTrajet);
+    void AjouterFin(Trajet *unTrajet);
     // Mode d'emploi : Ajoute un trajet à la fin de la collection
     // Contrat : Aucun
 
@@ -33,35 +33,37 @@ public:
     // Mode d'emploi : Affiche les éléments de l'ensemble
     // Contrat : Aucun
 
-    void Rechercher(char* villeDepart, char* villeArrivee);
+    void Rechercher(char *villeDepart, char *villeArrivee);
     // Mode d'emploi : Affiche les trajets correspondant à la recherche
     // Contrat : Aucun
-//---------------------------------------------------------------Surcharge d'opérateurs
+    //---------------------------------------------------------------Surcharge d'opérateurs
 
-//-----------------------------------------------------Constructeurs - Destructeur
-    Collection ( Collection const & unCollection );
+    //-----------------------------------------------------Constructeurs - Destructeur
+    Collection(Collection const &unCollection);
     // Mode d'emploi (constructeur de copie) :
     // Contrat :
 
-    Collection ( );
+    Collection();
     // Mode d'emploi (Constructeur par défaut) :
     // Contrat :
 
-    virtual ~Collection ( );
+    virtual ~Collection();
     // Mode d'emploi :
     // Contrat :
 
-//------------------------------------------------------------------ PRIVE
+    void Collection::RechercheSimple(char *villeDepart, char *villeArrivee);
+
+    void Collection::RechercheComplexe(char *villeDepart, char *villeArrivee);
+    //------------------------------------------------------------------ PRIVE
 protected:
-//-----------------------------------------------------------Méthodes protégées
+    //-----------------------------------------------------------Méthodes protégées
     // type méthode ( liste des paramètres );
     // Mode d'emploi :
     // Contrat :
 
-//-------------------------------------------------------------Attributs protégés
-    Cellule* head;
-    Cellule* tail;
-
+    //-------------------------------------------------------------Attributs protégés
+    Cellule *head;
+    Cellule *tail;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Classe>
