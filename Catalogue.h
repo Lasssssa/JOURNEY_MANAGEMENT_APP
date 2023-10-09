@@ -51,6 +51,12 @@ protected:
     // type méthode ( liste des paramètres );
     // Mode d'emploi :
     // Contrat :
+    void printMenu();
+    void printAjoutTrajet();
+
+    void ajoutTrajet();
+    void ajoutTrajetSimple();
+    void ajoutTrajetCompose();
 
 //-------------------------------------------------------------Attributs protégés
     Collection *c;

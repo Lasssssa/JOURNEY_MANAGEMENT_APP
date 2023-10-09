@@ -15,7 +15,10 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 
 void TrajetCompose::Afficher(){
-//    cout << "Trajet de " << this->listeTrajets->GetHead->getVilleDepart() << " à " << this->listeTrajets->GetTail->getVilleArrivee() << " en " << moyenTransport << endl;
+    cout << "------------Trajet composé--------------" << endl;
+    listeTrajets->Afficher();
+    cout << "----------------------------------------" << endl;
+
 }
 
 char* TrajetCompose::getVilleDepart(){

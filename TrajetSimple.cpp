@@ -59,7 +59,7 @@ TrajetSimple::~TrajetSimple (){
 } //----- Fin de ~TrajetSimple
 
 void TrajetSimple::Afficher(){
-    cout << "Trajet de " << villeDepart << " à " << villeArrivee << " en " << moyenTransport << endl;
+    cout << "De " << villeDepart << " à " << villeArrivee << " en " << moyenTransport << endl;
 }
 
 char* TrajetSimple::getVilleDepart(){

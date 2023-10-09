@@ -37,6 +37,7 @@ Collection::~Collection ( ){
     Cellule* current = head;
     while(current != nullptr){
         Cellule* next = current->suivant;
+        delete current->t;
         delete current;
         current = next;
     }
@@ -81,7 +82,11 @@ Cellule* Collection::GetTail(){
 }
 
 void Collection::Afficher(){
-    cout << "Affichage de la collection" << endl;
+    Cellule* current = head;
+    while(current != nullptr){
+        current->t->Afficher();
+        current = current->suivant;
+    }
 }
 
 void Collection::Rechercher(char* villeDepart, char* villeArrivee){
