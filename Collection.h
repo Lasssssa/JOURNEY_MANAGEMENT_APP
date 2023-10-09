@@ -36,6 +36,14 @@ public:
     void Rechercher(char* villeDepart, char* villeArrivee);
     // Mode d'emploi : Affiche les trajets correspondant à la recherche
     // Contrat : Aucun
+
+    Cellule* GetHead();
+    // Mode d'emploi : Renvoi la tête de la collection
+    // Contrat : Aucun
+
+    Cellule* GetTail();
+    // Mode d'emploi : Renvoi la queue de la collection
+    // Contrat : Aucun
 //---------------------------------------------------------------Surcharge d'opérateurs
 
 //-----------------------------------------------------Constructeurs - Destructeur

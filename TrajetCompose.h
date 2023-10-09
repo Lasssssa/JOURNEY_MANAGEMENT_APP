@@ -41,7 +41,7 @@ public:
     // Mode d'emploi (constructeur de copie) :
     // Contrat :
 
-    TrajetCompose ( );
+    TrajetCompose ( Collection* newListeTrajets);
     // Mode d'emploi (Constructeur par défaut) :
     // Contrat :
 

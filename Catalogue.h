@@ -20,6 +20,16 @@ class Catalogue
 public:
 //-----------------------------------------------------------------Méthodes publiques
 
+    void Afficher();
+    // Mode d'emploi : Affiche le contenu du catalogue
+    // Contrat :
+
+    void AjouterTrajet(Trajet* unTrajet);
+    // Mode d'emploi : Ajoute un trajet au catalogue
+    // Contrat :
+
+    void Menu();
+
 //---------------------------------------------------------------Surcharge d'opérateurs
 
 //-----------------------------------------------------Constructeurs - Destructeur
