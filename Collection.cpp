@@ -29,6 +29,19 @@ Collection::Collection()
     tail = head; // à ce stade la tête et la queue sont les mêmes
 }
 
+Collection::~Collection();
+{   
+    Cellule *temp,*temp2;
+    temp=head;
+    while (temp!=tail)
+    {   temp2=temp->suivant;
+        delete temp;
+        temp=temp2;
+    }
+    delete temp;
+    
+}
+
 void Collection::AjouterFin(Trajet *unTrajet)
 {
     Cellule *temp = new Cellule;
@@ -51,7 +64,7 @@ void Collection::RechercheSimple(char *villeDepart, char *villeArrivee)
     {
         if (strcmp(courante->t->getVilleDepart(), villeDepart) == 0 && strcmp(courante->t->getVilleArrivee(), villeArrivee) == 0)
         {
-            cout << "Le trajet de " << villeDepart << " à " << villeArrivee << "existe";
+            courante->t->Afficher();
             return;
         }
         courante = courante->suivant;
@@ -75,6 +88,8 @@ void Collection::Afficher()
     }
     
 }
+
+
 
 //-------------------------------------------- Constructeurs - destructeur
 // Collection::Collection ( const Collection & unCollection )
