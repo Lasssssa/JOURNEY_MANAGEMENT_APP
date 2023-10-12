@@ -34,6 +34,8 @@ public:
     // Contrat : Aucun
     //
 
+    TrajetCompose* Copie();
+
 //---------------------------------------------------------------Surcharge d'opérateurs
     //
 //-----------------------------------------------------Constructeurs - Destructeur

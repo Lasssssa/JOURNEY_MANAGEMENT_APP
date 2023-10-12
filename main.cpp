@@ -7,10 +7,9 @@ using namespace std;
 
 int main(){
 
-    Catalogue* catalogue = new Catalogue();
+    Catalogue catalogue;
     cout << "Bienvenue dans le catalogue de trajets" << endl;
-    catalogue->Menu();
-    delete catalogue;
+    catalogue.Menu();
 
     return 0;
 }

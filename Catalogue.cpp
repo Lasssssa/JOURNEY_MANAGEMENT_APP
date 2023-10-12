@@ -16,44 +16,43 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type Catalogue::Méthode ( liste de paramètres )
-// Algorithme :
-// Présentation de l'algorithme
-//{
-//} //----- Fin de Méthode
 
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
-Catalogue::Catalogue(){
+Catalogue::Catalogue()
+{
 #ifdef MAP
     cout << "Appel au constructeur de <Catalogue>" << endl;
 #endif
     c = new Collection;
 }
 
-Catalogue::~Catalogue(){
+Catalogue::~Catalogue()
+{
 #ifdef MAP
     cout << "Appel au destructeur de <Catalogue>" << endl;
 #endif
     delete c;
 }
 
-void Catalogue::Afficher(){
+void Catalogue::Afficher()
+{
     c->Afficher();
     cin >> ws;
     cout << "Appuyez sur entrée pour continuer" << endl;
     cin.get();
 }
 
-void Catalogue::AjouterTrajet(Trajet* unTrajet){
+void Catalogue::AjouterTrajet(Trajet* unTrajet)
+{
     c->AjouterFin(unTrajet);
 }
 
-void Catalogue::Menu() {
+void Catalogue::Menu()
+{
     int choix;
     do {
-//        system("clear");
         printMenu();
         cin >> choix;
         if(cin.fail()){
@@ -69,7 +68,7 @@ void Catalogue::Menu() {
                 Afficher();
                 break;
             case 3:
-//                RechercherTrajet();
+                RechercherTrajet();
                 break;
             case 4:
                 cout << "Au revoir !" << endl;
@@ -86,10 +85,29 @@ void Catalogue::Menu() {
 
 //----------------------------------------------------- Méthodes protégées
 
-void Catalogue::printMenu(){
+void Catalogue::RechercherTrajet()
+{
+    char depart[100];
+    char arrivee[100];
     cout << "------------------------------------------" << endl;
-    cout << "Bienvenue dans le catalogue de trajets" << endl;
-    cout << "Que voulez-vous faire ?" << endl;
+    cout << "RECHERCHE D'UN TRAJET" << endl;
+    cout << "Choix de la ville de départ : " << endl;
+    cin >> depart;
+    cout << "Choix de la ville d'arrivée : " << endl;
+    cin >> arrivee;
+//    c->RechercheSimple(depart, arrivee);
+    c->RechercheComplexe(depart, arrivee);
+    cin >> ws;
+    cout << "Appuyez sur entrée pour continuer" << endl;
+    cout << "------------------------------------------" << endl;
+    cin.get();
+}
+
+void Catalogue::printMenu()
+{
+    cout << "------------------------------------------" << endl;
+    cout << "BIENVENUE DANS LE CATALOGUE DE TRAJET" << endl;
+    cout << "QUE VOULEZ VOUS FAIRE ?" << endl;
     cout << "------------------------------------------" << endl;
     cout << "1. Ajouter un trajet" << endl;
     cout << "2. Afficher le catalogue" << endl;
@@ -98,11 +116,13 @@ void Catalogue::printMenu(){
     cout << "Votre choix : ";
 }
 
-void Catalogue::ajoutTrajetSimple() {
+void Catalogue::ajoutTrajetSimple()
+{
     char depart[100];
     char arrivee[100];
     char moyen[100];
-    cout << "Ajout d'un trajet simple" << endl;
+    cout << "------------------------------------------" << endl;
+    cout << "AJOUT D'UN TRAJET SIMPLE" << endl;
     cout << "Choix de la ville de départ : " << endl;
     cin >> depart;
     cout << "Choix de la ville d'arrivée : " << endl;
@@ -112,7 +132,8 @@ void Catalogue::ajoutTrajetSimple() {
     c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
 }
 
-void Catalogue::ajoutTrajet(){
+void Catalogue::ajoutTrajet()
+{
     int choix;
     do{
         printAjoutTrajet();
@@ -138,7 +159,8 @@ void Catalogue::ajoutTrajet(){
     }while(choix != 3);
 }
 
-void Catalogue::printAjoutTrajet() {
+void Catalogue::printAjoutTrajet()
+{
     cout << "------------------------------------------" << endl;
     cout << "1. Ajouter un trajet simple" << endl;
     cout << "2. Ajouter un trajet composé" << endl;
@@ -146,8 +168,9 @@ void Catalogue::printAjoutTrajet() {
     cout << "Votre choix : ";
 }
 
-void Catalogue::ajoutTrajetCompose() {
-    int choice;
+void Catalogue::ajoutTrajetCompose()
+{
+    int choice = 1 ;
     char depart[100];
     char arrivee[100];
     char moyen[100];
@@ -161,6 +184,12 @@ void Catalogue::ajoutTrajetCompose() {
     cin >> moyen;
     Collection* listeTrajet = new Collection();
     listeTrajet->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
+    cout << "Choix de l'arrêt suivant : " << endl;
+    strcpy(depart, arrivee);
+    cin >> arrivee;
+    cout << "Choix du moyen de transport : " << endl;
+    cin >> moyen;
+    listeTrajet->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
     while(choice != 0){
         strcpy(depart, arrivee);
         cout << "Choix de l'arrêt suivant (0 pour terminer) : " << endl;
@@ -173,5 +202,6 @@ void Catalogue::ajoutTrajetCompose() {
             listeTrajet->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
         }
     }
-    c->AjouterFin(new TrajetCompose(listeTrajet));
+    TrajetCompose *trajetCompose = new TrajetCompose(listeTrajet);
+    c->AjouterFin(trajetCompose);
 }

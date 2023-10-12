@@ -33,9 +33,9 @@ public:
     // Mode d'emploi : Affiche les éléments de l'ensemble
     // Contrat : Aucun
 
-    void Rechercher(char* villeDepart, char* villeArrivee);
-    // Mode d'emploi : Affiche les trajets correspondant à la recherche
-    // Contrat : Aucun
+    void RechercheSimple(char *villeDepart, char *villeArrivee);
+
+    void RechercheComplexe(char *villeDepart, char *villeArrivee);
 
     Cellule* GetHead();
     // Mode d'emploi : Renvoi la tête de la collection
@@ -74,4 +74,10 @@ protected:
 
 //-------------------------------- Autres définitions dépendantes de <Classe>
 
+void RechercheComplexeRecursive(Cellule *head, Cellule *courante, char* villeArrivee, Collection* collection);
+
+bool isPresent(Trajet* t, Collection* collection);
+
+
 #endif // !defined CLASSE_H
+

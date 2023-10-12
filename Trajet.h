@@ -31,7 +31,7 @@ public:
     // Mode d'emploi : Renvoi la ville d'arrivée
     // Contrat : Aucun
     //
-
+    virtual Trajet* Copie() = 0;
 //---------------------------------------------------------------Surcharge d'opérateurs
 
 //-----------------------------------------------------Constructeurs - Destructeur

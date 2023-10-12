@@ -7,6 +7,7 @@ using namespace std;
 
 //------------------------------------------------------ Include personnel
 #include "TrajetCompose.h"
+#include "TrajetSimple.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -14,29 +15,30 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
-void TrajetCompose::Afficher(){
+void TrajetCompose::Afficher()
+{
     cout << "------------Trajet composé--------------" << endl;
     listeTrajets->Afficher();
     cout << "----------------------------------------" << endl;
 
 }
 
-char* TrajetCompose::getVilleDepart(){
+char* TrajetCompose::getVilleDepart()
+{
     return this->listeTrajets->GetHead()->t->getVilleDepart();
 }
 
-char* TrajetCompose::getVilleArrivee(){
+char* TrajetCompose::getVilleArrivee()
+{
     return this->listeTrajets->GetTail()->t->getVilleArrivee();
 }
-
-
-
 
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
 
-TrajetCompose::TrajetCompose(Collection* newListeTrajets) : Trajet(){
+TrajetCompose::TrajetCompose(Collection* newListeTrajets) : Trajet()
+{
 #ifdef MAP
     cout << "Appel au constructeur de <TrajetCompose>" << endl;
 #endif
@@ -50,6 +52,19 @@ TrajetCompose::~TrajetCompose (){
     delete listeTrajets;
 } //----- Fin de ~TrajetCompose
 
+TrajetCompose* TrajetCompose::Copie()
+// Algorithme : On parcourt la liste de trajets et on copie chaque trajet dans une nouvelle liste
+// On retourne un nouveau trajet composé avec la nouvelle liste
+{
+    Collection* newListeTrajets = new Collection();
+    Cellule* current = listeTrajets->GetHead();
+    while(current != nullptr){
+        Trajet* currentTrajet = current->t;
+        newListeTrajets->AjouterFin(currentTrajet->Copie());
+        current = current->suivant;
+    }
+    return new TrajetCompose(newListeTrajets);
+}
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées

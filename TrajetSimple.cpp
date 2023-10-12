@@ -15,26 +15,12 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type TrajetSimple::Méthode ( liste de paramètres )
-// Algorithme :
-// Présentation de l'algorithme
-//{
-//} //----- Fin de Méthode
 
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
-//TrajetSimple::TrajetSimple ( const TrajetSimple & unTrajetSimple )
-// Algorithme :
-// Présentation de l'algorithme
-//{
-//#if defined (MAP) // MAP : Mise au point
-//    cout << "Appel au constructeur de copie de <TrajetSimple>" << endl;
-//#endif
-//    // Code du constructeur de copie
-//} //----- Fin de TrajetSimple (constructeur de copie)
-
-TrajetSimple::TrajetSimple (const char* villeDepartConstruct, const char* villeArriveeConstruct, const char* moyenTransportConstruct) : Trajet(){
+TrajetSimple::TrajetSimple (const char* villeDepartConstruct, const char* villeArriveeConstruct, const char* moyenTransportConstruct) : Trajet()
+{
 #if defined (MAP) // MAP : Mise au point
     cout << "Appel au constructeur de <TrajetSimple>" << endl;
 #endif
@@ -49,7 +35,8 @@ TrajetSimple::TrajetSimple (const char* villeDepartConstruct, const char* villeA
 } //----- Fin de TrajetSimple
 
 
-TrajetSimple::~TrajetSimple (){
+TrajetSimple::~TrajetSimple ()
+{
 #if defined (MAP) // MAP : Mise au point
     cout << "Appel au destructeur de <TrajetSimple>" << endl;
 #endif
@@ -58,19 +45,27 @@ TrajetSimple::~TrajetSimple (){
     delete [] moyenTransport;
 } //----- Fin de ~TrajetSimple
 
-void TrajetSimple::Afficher(){
+void TrajetSimple::Afficher()
+{
+    cout << "-----------Trajet Simple----------------" << endl;
     cout << "De " << villeDepart << " à " << villeArrivee << " en " << moyenTransport << endl;
+    cout << "----------------------------------------" << endl;
 }
 
-char* TrajetSimple::getVilleDepart(){
+char* TrajetSimple::getVilleDepart()
+{
     return villeDepart;
 }
 
-char* TrajetSimple::getVilleArrivee(){
+char* TrajetSimple::getVilleArrivee()
+{
     return villeArrivee;
 }
 
-
+TrajetSimple* TrajetSimple::Copie()
+{
+    return new TrajetSimple(villeDepart,villeArrivee,moyenTransport);
+}
 
 //------------------------------------------------------------------ PRIVE
 

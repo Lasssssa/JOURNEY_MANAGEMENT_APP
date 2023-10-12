@@ -22,15 +22,6 @@ using namespace std;
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
-//Trajet::Trajet ( const Trajet & unTrajet )
-// Algorithme :
-// Présentation de l'algorithme
-//{
-//#if defined (MAP) // MAP : Mise au point
-//    cout << "Appel au constructeur de copie de <Trajet>" << endl;
-//#endif
-//    // Code du constructeur de copie
-//} //----- Fin de Trajet (constructeur de copie)
 
 Trajet::Trajet ( )
 {
