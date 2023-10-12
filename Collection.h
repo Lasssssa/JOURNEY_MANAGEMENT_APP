@@ -33,10 +33,6 @@ public:
     // Mode d'emploi : Affiche les éléments de l'ensemble
     // Contrat : Aucun
 
-    void RechercheSimple(char *villeDepart, char *villeArrivee);
-
-    void RechercheComplexe(char *villeDepart, char *villeArrivee);
-
     Cellule* GetHead();
     // Mode d'emploi : Renvoi la tête de la collection
     // Contrat : Aucun
