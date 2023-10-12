@@ -55,9 +55,6 @@ void Collection::AjouterDebut(Trajet* unTrajet)
 // On ajoute la cellule au début de la collection
 // Si la queue est nulle, on l'initialise à la cellule
 {
-#ifdef MAP
-    cout << "Appel à la méthode AjouterDebut de <Collection>" << endl;
-#endif
     Cellule* newCellule = new Cellule;
     newCellule->t = unTrajet;
     newCellule->suivant = head;
@@ -73,9 +70,6 @@ void Collection::AjouterFin(Trajet* unTrajet)
 // On ajoute la cellule à la fin de la collection
 // Si la tête est nulle, on l'initialise à la cellule
 {
-#ifdef MAP
-    cout << "Appel à la méthode AjouterFin de <Collection>" << endl;
-#endif
     Cellule* newCellule = new Cellule;
     newCellule->t = unTrajet;
     newCellule->suivant = nullptr;
