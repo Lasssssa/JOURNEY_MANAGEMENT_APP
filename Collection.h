@@ -59,6 +59,10 @@ public:
     // Mode d'emploi :
     // Contrat :
 
+    void RechercheSimple(char *villeDepart, char *villeArrivee);
+
+    void RechercheComplexe(char *villeDepart, char *villeArrivee);
+
 //------------------------------------------------------------------ PRIVE
 protected:
 //-----------------------------------------------------------Méthodes protégées
