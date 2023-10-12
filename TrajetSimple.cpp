@@ -47,9 +47,7 @@ TrajetSimple::~TrajetSimple ()
 
 void TrajetSimple::Afficher()
 {
-    cout << "-----------Trajet Simple----------------" << endl;
     cout << "De " << villeDepart << " à " << villeArrivee << " en " << moyenTransport << endl;
-    cout << "----------------------------------------" << endl;
 }
 
 char* TrajetSimple::getVilleDepart()
