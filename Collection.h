@@ -51,9 +51,9 @@ public:
     // Mode d'emploi :
     // Contrat :
 
-    void Collection::RechercheSimple(char *villeDepart, char *villeArrivee);
+    void RechercheSimple(char *villeDepart, char *villeArrivee);
 
-    void Collection::RechercheComplexe(char *villeDepart, char *villeArrivee);
+    void RechercheComplexe(char *villeDepart, char *villeArrivee);
     //------------------------------------------------------------------ PRIVE
 protected:
     //-----------------------------------------------------------Méthodes protégées
