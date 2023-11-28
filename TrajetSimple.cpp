@@ -5,6 +5,7 @@
 using namespace std;
 #include <iostream>
 #include <cstring>
+#include <fstream>
 
 //------------------------------------------------------ Include personnel
 #include "TrajetSimple.h"
@@ -58,6 +59,12 @@ char* TrajetSimple::getVilleDepart()
 char* TrajetSimple::getVilleArrivee()
 {
     return villeArrivee;
+}
+
+void TrajetSimple::Ecrire(ofstream& fichier)
+{
+    
+    fichier << "S;" << villeDepart << ";" << moyenTransport << ";" << villeArrivee << endl;
 }
 
 TrajetSimple* TrajetSimple::Copie()

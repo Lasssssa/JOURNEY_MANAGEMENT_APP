@@ -31,6 +31,8 @@ public:
     // Mode d'emploi : Renvoi la ville d'arrivée
     // Contrat : Aucun
 
+    virtual void Ecrire(ofstream& fichier);
+
     TrajetSimple* Copie();
 //---------------------------------------------------------------Surcharge d'opérateurs
     //

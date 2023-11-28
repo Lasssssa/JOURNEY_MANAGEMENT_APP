@@ -5,6 +5,7 @@
 using namespace std;
 #include <iostream>
 #include <cstring>
+#include <fstream>
 
 //------------------------------------------------------ Include personnel
 #include "Catalogue.h"
@@ -74,7 +75,7 @@ void Catalogue::Menu()
                 ImporterTrajets();
                 break;
             case 5:
-                ExporterTrajets();
+                menuExport();
                 break;
             case 6:
                 cout << "Au revoir !" << endl;
@@ -119,7 +120,9 @@ void Catalogue::printMenu()
     cout << "1. Ajouter un trajet" << endl;
     cout << "2. Afficher le catalogue" << endl;
     cout << "3. Rechercher un trajet" << endl;
-    cout << "4. Quitter" << endl;
+    cout << "4. Importer les trajets" << endl;
+    cout << "5. Exporter les trajets" << endl;
+    cout << "6. Quitter" << endl;
     cout << "Votre choix : ";
 }
 
@@ -217,8 +220,63 @@ void Catalogue::ajoutTrajetCompose()
 
 void Catalogue::ExporterTrajets() {
 
+    //CREATION DU FICHIER
+
+    char nomDuFichier[100];
+
+    cout << "-----------------------------------------" << endl;
+    cout << "EXPORTATION DES TRAJETS" << endl;
+    cout << "Comment souhaitez-vous nommer votre fichier ?" <<endl;
+    cin >> nomDuFichier;
+    strcat(nomDuFichier,".scar");
+    ofstream fichier(nomDuFichier,ios::out);
+    
+    Cellule* current = c->GetHead();
+    while(current != nullptr){
+        current->t->Ecrire(fichier);
+        current = current->suivant;
+    }
+
+
+    fichier.close();
+
+
 }
 
 void Catalogue::ImporterTrajets() {
 
+}
+
+
+void Catalogue::menuExport() {
+    cout << "-----------------------------------------" << endl;
+    cout << "1. Exporter tous les trajets" << endl;
+    cout << "2. Exporter selon le type de trajets" << endl;
+    cout << "3. Exporter selon la ville de départ et/ou la ville d'arrivée" << endl;
+    cout << "4. Exporter selon une selection de trajets" << endl;
+    cout << "5. Retour" << endl;
+    cout << "-----------------------------------------" << endl;
+    cout << "Votre choix : ";
+    int choix;
+    cin >> choix;
+    switch (choix) {
+        case 1:
+            Catalogue::ExporterTrajets();
+            break;
+        case 2:
+            //exporter selon le type de trajets
+            break;
+        case 3:
+            //exporter selon la ville de départ et/ou la ville d'arrivée
+            break;
+        case 4:
+            //exporter selon une selection de trajets
+            break;
+        case 5:
+            //retour
+            break;
+        default:
+            cout << "Erreur de saisie" << endl;
+            break;
+    }
 }

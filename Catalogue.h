@@ -78,6 +78,8 @@ protected:
     // Mode d'emploi : Ajoute un trajet composé au catalogue
     // Contrat : Aucun
 
+    void menuExport();
+
 //-------------------------------------------------------------Attributs protégés
     Collection *c;
 
