@@ -32,6 +32,10 @@ public:
 
     void RechercherTrajet();
 
+    void ExporterTrajets();
+
+    void ImporterTrajets();
+
 //---------------------------------------------------------------Surcharge d'opérateurs
 
 //-----------------------------------------------------Constructeurs - Destructeur

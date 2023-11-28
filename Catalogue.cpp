@@ -71,6 +71,12 @@ void Catalogue::Menu()
                 RechercherTrajet();
                 break;
             case 4:
+                ImporterTrajets();
+                break;
+            case 5:
+                ExporterTrajets();
+                break;
+            case 6:
                 cout << "Au revoir !" << endl;
                 break;
             default:
@@ -207,4 +213,12 @@ void Catalogue::ajoutTrajetCompose()
     }
     TrajetCompose *trajetCompose = new TrajetCompose(listeTrajet);
     c->AjouterFin(trajetCompose);
+}
+
+void Catalogue::ExporterTrajets() {
+
+}
+
+void Catalogue::ImporterTrajets() {
+
 }
