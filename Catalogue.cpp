@@ -39,9 +39,9 @@ Catalogue::~Catalogue()
 void Catalogue::Afficher()
 {
     c->Afficher();
-    cin >> ws;
-    cout << "Appuyez sur entrée pour continuer" << endl;
+    cout << "Appuyez sur Entrer pour continuer" << endl;
     cin.get();
+    cin.ignore();
 }
 
 void Catalogue::AjouterTrajet(Trajet* unTrajet)
@@ -92,15 +92,16 @@ void Catalogue::RechercherTrajet()
     cout << "------------------------------------------" << endl;
     cout << "RECHERCHE D'UN TRAJET" << endl;
     cout << "Choix de la ville de départ : " << endl;
-    cin >> depart;
+    cin >> ws;
+cin.getline(depart,100);
     cout << "Choix de la ville d'arrivée : " << endl;
-    cin >> arrivee;
+    cin.getline(arrivee,100);
 //    c->RechercheSimple(depart, arrivee);
     c->RechercheComplexe(depart, arrivee);
-    cin >> ws;
     cout << "Appuyez sur entrée pour continuer" << endl;
     cout << "------------------------------------------" << endl;
     cin.get();
+    cin.ignore();
 }
 
 void Catalogue::printMenu()
@@ -124,11 +125,12 @@ void Catalogue::ajoutTrajetSimple()
     cout << "------------------------------------------" << endl;
     cout << "AJOUT D'UN TRAJET SIMPLE" << endl;
     cout << "Choix de la ville de départ : " << endl;
-    cin >> depart;
+    cin >> ws;
+cin.getline(depart,100);
     cout << "Choix de la ville d'arrivée : " << endl;
-    cin >> arrivee;
+    cin.getline(arrivee,100);
     cout << "Choix du moyen de transport : " << endl;
-    cin >> moyen;
+    cin.getline(moyen,100);
     c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
 }
 
@@ -177,28 +179,29 @@ void Catalogue::ajoutTrajetCompose()
     cout << "------------------------------------------" << endl;
     cout << "Ajout d'un trajet composé" << endl;
     cout << "Choix de la ville de départ : " << endl;
-    cin >> depart;
+    cin >> ws;
+    cin.getline(depart,100);
     cout << "Choix du premier arrêt : " << endl;
-    cin >> arrivee;
+    cin.getline(arrivee,100);
     cout << "Choix du moyen de transport : " << endl;
-    cin >> moyen;
+    cin.getline(moyen,100);
     Collection* listeTrajet = new Collection();
     listeTrajet->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
     cout << "Choix de l'arrêt suivant : " << endl;
     strcpy(depart, arrivee);
-    cin >> arrivee;
+    cin.getline(arrivee,100);
     cout << "Choix du moyen de transport : " << endl;
-    cin >> moyen;
+    cin.getline(moyen,100);
     listeTrajet->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
     while(choice != 0){
         strcpy(depart, arrivee);
         cout << "Choix de l'arrêt suivant (0 pour terminer) : " << endl;
-        cin >> arrivee;
+        cin.getline(arrivee,100);
         if(strcmp(arrivee, "0") == 0){
             choice = 0;
         } else {
             cout << "Choix du moyen de transport : " << endl;
-            cin >> moyen;
+            cin.getline(moyen,100);
             listeTrajet->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
         }
     }

@@ -4,7 +4,7 @@
 #define TRAJETCOMPOSE_H
 
 //-------------------------------------------------------- Interfaces utilisées
-#include "collection.h"
+#include "Collection.h"
 #include "Trajet.h"
 
 //------------------------------------------------------------- Constantes
