@@ -33,6 +33,7 @@ public:
     // Mode d'emploi : Renvoi la ville d'arrivée
     // Contrat : Aucun
     //
+    virtual void Ecrire(ofstream& fichier);
 
     TrajetCompose* Copie();
 
@@ -60,6 +61,10 @@ protected:
 
 //-------------------------------------------------------------Attributs protégés
     Collection* listeTrajets;
+
+private:
+
+    int Taille();
 
 };
 

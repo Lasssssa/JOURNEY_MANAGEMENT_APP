@@ -4,6 +4,7 @@
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
+#include <fstream>
 
 //------------------------------------------------------ Include personnel
 #include "TrajetCompose.h"
@@ -31,6 +32,17 @@ char* TrajetCompose::getVilleDepart()
 char* TrajetCompose::getVilleArrivee()
 {
     return this->listeTrajets->GetTail()->t->getVilleArrivee();
+}
+
+void TrajetCompose::Ecrire(ofstream& fichier)
+{
+    fichier << "C;" << Taille() << ";" << listeTrajets->GetHead()->t->getVilleDepart() << ";" << listeTrajets->GetTail()->t->getVilleArrivee() << endl;
+    Cellule* current = listeTrajets->GetHead();
+    while(current != nullptr){
+        current->t->Ecrire(fichier);
+        current = current->suivant;
+    }
+    
 }
 
 //------------------------------------------------- Surcharge d'opérateurs
@@ -66,5 +78,15 @@ TrajetCompose* TrajetCompose::Copie()
     return new TrajetCompose(newListeTrajets);
 }
 //------------------------------------------------------------------ PRIVE
+
+int TrajetCompose::Taille(){
+    int taille = 0;
+    Cellule* current = listeTrajets->GetHead();
+    while(current != nullptr){
+        taille++;
+        current = current->suivant;
+    }
+    return taille;
+}
 
 //----------------------------------------------------- Méthodes protégées

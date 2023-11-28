@@ -89,6 +89,7 @@ protected:
     void importerTrajetsSelonVille(ifstream &fichier);
 
     void importerTrajetsSelonIntervalle(ifstream &fichier);
+    void menuExport();
 
 //-------------------------------------------------------------Attributs protégés
     Collection *c;
