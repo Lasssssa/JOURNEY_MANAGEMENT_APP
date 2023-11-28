@@ -30,8 +30,8 @@ public:
     virtual char* getVilleArrivee();
     // Mode d'emploi : Renvoi la ville d'arrivée
     // Contrat : Aucun
-    //
 
+    TrajetSimple* Copie();
 //---------------------------------------------------------------Surcharge d'opérateurs
     //
 //-----------------------------------------------------Constructeurs - Destructeur
@@ -46,8 +46,6 @@ public:
      virtual ~TrajetSimple ( );
     // Mode d'emploi :
     // Contrat :
-
-    TrajetSimple* Copie();
 
 //------------------------------------------------------------------ PRIVE
 protected:
