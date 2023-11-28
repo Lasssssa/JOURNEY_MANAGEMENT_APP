@@ -1,11 +1,11 @@
-H;3;2
+3;2
 S;Lyon;Pedalo;La Baule
 S;Marseille;Bus;Paris
 S;Nantes;Pied;Juan-les-Pins
 C;3;Bordeaux;Toulouse
-Bordeaux;Avion;Nanterre
-Nanterre;Bateau;Lyon
-Lyon;Trotinette Electrique;Toulouse
+S;Bordeaux;Avion;Nanterre
+S;Nanterre;Bateau;Lyon
+S;Lyon;Trotinette Electrique;Toulouse
 C;2;Lyon;Lille
-Lyon;Nage;Reims
-Reims;Helicoptere;Lille
+S;Lyon;Nage;Reims
+S;Reims;Helicoptere;Lille

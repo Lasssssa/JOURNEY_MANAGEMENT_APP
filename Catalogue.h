@@ -54,6 +54,10 @@ public:
 //------------------------------------------------------------------ PRIVE
 protected:
 //-----------------------------------------------------------Méthodes protégées
+
+    int menuTypeImport();
+
+    int menuImport();
     // type méthode ( liste des paramètres );
     // Mode d'emploi :
     // Contrat :
@@ -77,6 +81,14 @@ protected:
     void ajoutTrajetCompose();
     // Mode d'emploi : Ajoute un trajet composé au catalogue
     // Contrat : Aucun
+
+    void importerTousTrajets(ifstream &fichier);
+
+    void importerTrajetsSelonType(ifstream &fichier);
+
+    void importerTrajetsSelonVille(ifstream &fichier);
+
+    void importerTrajetsSelonIntervalle(ifstream &fichier);
 
 //-------------------------------------------------------------Attributs protégés
     Collection *c;
