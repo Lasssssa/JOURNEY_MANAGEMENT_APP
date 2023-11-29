@@ -1,4 +1,4 @@
-CPPFLAGS = -g -Wall -ansi -pedantic -std=c++11 -DMAP
+CPPFLAGS = -g -Wall -ansi -pedantic -std=c++11
 # version initiale sans variable
 # règle explicite pour la reliure
 EXE = prog

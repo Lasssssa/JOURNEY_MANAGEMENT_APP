@@ -20,18 +20,14 @@ using namespace std;
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
-TrajetSimple::TrajetSimple (const char* villeDepartConstruct, const char* villeArriveeConstruct, const char* moyenTransportConstruct) : Trajet()
+TrajetSimple::TrajetSimple (const string & villeDepartConstruct, const string & villeArriveeConstruct, const string & moyenTransportConstruct) : Trajet()
 {
 #if defined (MAP) // MAP : Mise au point
     cout << "Appel au constructeur de <TrajetSimple>" << endl;
 #endif
-    villeDepart = new char[strlen(villeDepartConstruct)+1];
-    strcpy(villeDepart,villeDepartConstruct);
-    villeArrivee = new char[strlen(villeArriveeConstruct)+1];
-    strcpy(villeArrivee,villeArriveeConstruct);
-    moyenTransport = new char[strlen(moyenTransportConstruct)+1];
-    strcpy(moyenTransport,moyenTransportConstruct);
-
+    villeDepart = villeDepartConstruct;
+    villeArrivee = villeArriveeConstruct;
+    moyenTransport = moyenTransportConstruct;
 
 } //----- Fin de TrajetSimple
 
@@ -41,9 +37,6 @@ TrajetSimple::~TrajetSimple ()
 #if defined (MAP) // MAP : Mise au point
     cout << "Appel au destructeur de <TrajetSimple>" << endl;
 #endif
-    delete [] villeDepart;
-    delete [] villeArrivee;
-    delete [] moyenTransport;
 } //----- Fin de ~TrajetSimple
 
 void TrajetSimple::Afficher()
@@ -51,12 +44,12 @@ void TrajetSimple::Afficher()
     cout << "De " << villeDepart << " à " << villeArrivee << " en " << moyenTransport << endl;
 }
 
-char* TrajetSimple::getVilleDepart()
+string & TrajetSimple::getVilleDepart()
 {
     return villeDepart;
 }
 
-char* TrajetSimple::getVilleArrivee()
+string & TrajetSimple::getVilleArrivee()
 {
     return villeArrivee;
 }

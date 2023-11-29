@@ -6,6 +6,7 @@
 //-------------------------------------------------------- Interfaces utilisées
 #include "Collection.h"
 #include "Trajet.h"
+#include <fstream>
 
 //------------------------------------------------------------- Constantes
 
@@ -25,11 +26,11 @@ public:
     // Mode d'emploi : Affiche les éléments de l'ensemble
     // Contrat : Aucun
     //
-    virtual char* getVilleDepart();
+    virtual string & getVilleDepart();
     // Mode d'emploi : Renvoi la ville de départ
     // Contrat : Aucun
     //
-    virtual char* getVilleArrivee();
+    virtual string & getVilleArrivee();
     // Mode d'emploi : Renvoi la ville d'arrivée
     // Contrat : Aucun
     //
@@ -64,7 +65,6 @@ protected:
 
 private:
 
-    int Taille();
 
 };
 

@@ -5,6 +5,7 @@
 
 //-------------------------------------------------------- Interfaces utilisées
 #include "Trajet.h"
+#include <fstream>
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -23,11 +24,11 @@ public:
     // Mode d'emploi : Affiche les éléments de l'ensemble
     // Contrat : Aucun
     //
-    virtual char* getVilleDepart();
+    virtual string & getVilleDepart();
     // Mode d'emploi : Renvoi la ville de départ
     // Contrat : Aucun
     //
-    virtual char* getVilleArrivee();
+    virtual string & getVilleArrivee();
     // Mode d'emploi : Renvoi la ville d'arrivée
     // Contrat : Aucun
 
@@ -41,7 +42,7 @@ public:
 //    Mode d'emploi (constructeur de copie) :
 //    Contrat :
 
-    TrajetSimple (const char* villeDepartConstruct,const char* villeArriveeConstruct, const char* moyenTransportConstruct);
+    TrajetSimple (const string & villeDepartConstruct,const string & villeArriveeConstruct, const string & moyenTransportConstruct);
     // Mode d'emploi (Constructeur par défaut) :
     // Contrat :
 
@@ -57,9 +58,9 @@ protected:
     // Contrat :
 
 //-------------------------------------------------------------Attributs protégés
-    char* villeDepart;
-    char* villeArrivee;
-    char* moyenTransport;
+    string villeDepart;
+    string villeArrivee;
+    string moyenTransport;
 
 };
 

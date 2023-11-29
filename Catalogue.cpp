@@ -6,6 +6,10 @@ using namespace std;
 #include <iostream>
 #include <cstring>
 #include <fstream>
+#include <cstdlib>
+//Include pour string
+#include <string>
+#include <sstream>
 
 //------------------------------------------------------ Include personnel
 #include "Catalogue.h"
@@ -94,15 +98,15 @@ void Catalogue::Menu()
 
 void Catalogue::RechercherTrajet()
 {
-    char depart[100];
-    char arrivee[100];
+    string depart = "";
+    string arrivee = "";
     cout << "------------------------------------------" << endl;
     cout << "RECHERCHE D'UN TRAJET" << endl;
     cout << "Choix de la ville de départ : " << endl;
     cin >> ws;
-cin.getline(depart,100);
+    getline(cin, depart);
     cout << "Choix de la ville d'arrivée : " << endl;
-    cin.getline(arrivee,100);
+    getline(cin, arrivee);
 //    c->RechercheSimple(depart, arrivee);
     c->RechercheComplexe(depart, arrivee);
     cout << "Appuyez sur entrée pour continuer" << endl;
@@ -128,18 +132,18 @@ void Catalogue::printMenu()
 
 void Catalogue::ajoutTrajetSimple()
 {
-    char depart[100];
-    char arrivee[100];
-    char moyen[100];
+    string depart = "";
+    string arrivee = "";
+    string moyen = "";
     cout << "------------------------------------------" << endl;
     cout << "AJOUT D'UN TRAJET SIMPLE" << endl;
     cout << "Choix de la ville de départ : " << endl;
     cin >> ws;
-    cin.getline(depart,100);
+    getline(cin, depart);
     cout << "Choix de la ville d'arrivée : " << endl;
-    cin.getline(arrivee,100);
+    getline(cin, arrivee);
     cout << "Choix du moyen de transport : " << endl;
-    cin.getline(moyen,100);
+    getline(cin, moyen);
     c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
 }
 
@@ -182,35 +186,35 @@ void Catalogue::printAjoutTrajet()
 void Catalogue::ajoutTrajetCompose()
 {
     int choice = 1 ;
-    char depart[100];
-    char arrivee[100];
-    char moyen[100];
+    string depart = "";
+    string arrivee = "";
+    string moyen = "";
     cout << "------------------------------------------" << endl;
     cout << "Ajout d'un trajet composé" << endl;
     cout << "Choix de la ville de départ : " << endl;
     cin >> ws;
-    cin.getline(depart,100);
+    getline(cin, depart);
     cout << "Choix du premier arrêt : " << endl;
-    cin.getline(arrivee,100);
+    getline(cin, arrivee);
     cout << "Choix du moyen de transport : " << endl;
-    cin.getline(moyen,100);
+    getline(cin, moyen);
     Collection* listeTrajet = new Collection();
     listeTrajet->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
     cout << "Choix de l'arrêt suivant : " << endl;
-    strcpy(depart, arrivee);
-    cin.getline(arrivee,100);
+    depart = arrivee;
+    getline(cin, arrivee);
     cout << "Choix du moyen de transport : " << endl;
-    cin.getline(moyen,100);
+    getline(cin, moyen);
     listeTrajet->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
     while(choice != 0){
-        strcpy(depart, arrivee);
+        depart = arrivee;
         cout << "Choix de l'arrêt suivant (0 pour terminer) : " << endl;
-        cin.getline(arrivee,100);
-        if(strcmp(arrivee, "0") == 0){
+        getline(cin, arrivee);
+        if(arrivee == "0"){
             choice = 0;
         } else {
             cout << "Choix du moyen de transport : " << endl;
-            cin.getline(moyen,100);
+            getline(cin, moyen);
             listeTrajet->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
         }
     }
@@ -222,25 +226,21 @@ void Catalogue::ExporterTrajets() {
 
     //CREATION DU FICHIER
 
-    char nomDuFichier[100];
+    string nomDuFichier = "";
 
     cout << "-----------------------------------------" << endl;
     cout << "EXPORTATION DES TRAJETS" << endl;
-    cout << "Comment souhaitez-vous nommer votre fichier ?" <<endl;
+    cout << "Comment souhaitez-vous nommer votre fichier ?" << endl;
     cin >> nomDuFichier;
-    strcat(nomDuFichier,".scar");
-    ofstream fichier(nomDuFichier,ios::out);
-    
-    Cellule* current = c->GetHead();
-    while(current != nullptr){
+    nomDuFichier = nomDuFichier + ".scar";
+    ofstream fichier(nomDuFichier, ios::out);
+    fichier << c->GetTaille() << ";" << c->GetTaille() << endl;
+    Cellule *current = c->GetHead();
+    while (current != nullptr) {
         current->t->Ecrire(fichier);
         current = current->suivant;
     }
-
-
     fichier.close();
-
-
 }
 
 void Catalogue::ImporterTrajets() {
@@ -249,16 +249,23 @@ void Catalogue::ImporterTrajets() {
     cout << "Choix du fichier à importer : " << endl;
     cout << "Voici les fichiers disponibles : " << endl;
     system("ls *.scar");
-    char nomFichier[100];
+    string nomFichier = "";
     cin >> ws;
-    cin.getline(nomFichier,100);
+    getline(cin, nomFichier);
     cout << "Importation du fichier " << nomFichier << endl;
     ifstream fichier(nomFichier, ios::in);
+    stringstream ss;
     if(fichier) {
-        char premierLigne[300];
-        fichier.getline(premierLigne,20);
-        int nbTrajetsSimple = atoi(strtok(premierLigne, ";"));
-        int nbTrajetsCompose = atoi(strtok(NULL, ";"));
+        string premierLigne = "";
+
+        getline(fichier, premierLigne);
+        ss = stringstream(premierLigne);
+        string nbTrajetSimple = "";
+        string nbTrajetCompose = "";
+        getline(ss, nbTrajetSimple, ';');
+        getline(ss, nbTrajetCompose, ';');
+        int nbTrajetsSimple = stoi(nbTrajetSimple);
+        int nbTrajetsCompose = stoi(nbTrajetCompose);
         int choix = menuImport();
         switch (choix) {
             case 1:
@@ -283,27 +290,42 @@ void Catalogue::ImporterTrajets() {
     }
 }
 
+
 void Catalogue::importerTousTrajets(ifstream &fichier) {
-    char ligne[300];
-    while(fichier.getline(ligne, 300)){
-        char* type = strtok(ligne, ";");
-        if(strcmp(type,"S")==0){
-            char *depart = strtok(NULL, ";");
-            char *arrivee = strtok(NULL, ";");
-            char *moyen = strtok(NULL, ";");
+    stringstream ss;
+    string ligne = "";
+    string type = "";
+    string depart = "";
+    string moyen = "";
+    string arrivee = "";
+    while(getline(fichier, ligne)){
+        ss = stringstream(ligne);
+        getline(ss, type, ';');
+        if(type == "S"){
+            getline(ss, depart, ';');
+            getline(ss, moyen, ';');
+            getline(ss, arrivee, ';');
+            depart.erase(depart.find_last_not_of(" \t\r\n") + 1);
+            moyen.erase(moyen.find_last_not_of(" \t\r\n") + 1);
+            arrivee.erase(arrivee.find_last_not_of(" \t\r\n") + 1);
             c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
-        }else if(strcmp(type,"C")==0){
-            char* nbLigne = strtok(NULL, ";");
-            int nbTrajet = atoi(nbLigne);
+        }else if(type == "C"){
+            string nbLigne ;
+            getline(ss, nbLigne, ';');
+            int nbTrajet = stoi(nbLigne);
             Collection* listeTrajet = new Collection();
             for(int i = 0; i < nbTrajet; i++)
             {
-                fichier.getline(ligne, 300);
-                strtok(ligne, ";");
-                char *depart = strtok(NULL, ";");
-                char *arrivee = strtok(NULL, ";");
-                char *moyen = strtok(NULL, ";");
-                cout << "Ajout du trajet simple : " << depart << " " << arrivee << " " << moyen << endl;
+                getline(fichier, ligne);
+                ss = stringstream(ligne);
+                getline(ss, type, ';');
+                getline(ss, depart, ';');
+                getline(ss, moyen, ';');
+                getline(ss, arrivee, ';');
+                type.erase(type.find_last_not_of(" \t\r\n") + 1);
+                depart.erase(depart.find_last_not_of(" \t\r\n") + 1);
+                moyen.erase(moyen.find_last_not_of(" \t\r\n") + 1);
+                arrivee.erase(arrivee.find_last_not_of(" \t\r\n") + 1);
                 listeTrajet->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
             }
             TrajetCompose *trajetCompose = new TrajetCompose(listeTrajet);

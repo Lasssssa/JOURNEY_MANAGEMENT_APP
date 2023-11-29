@@ -3,6 +3,9 @@
 #if !defined TRAJET_H
 #define TRAJET_H
 
+#include <fstream>
+
+using namespace std;
 //-------------------------------------------------------- Interfaces utilisées
 
 //------------------------------------------------------------- Constantes
@@ -23,11 +26,11 @@ public:
     // Mode d'emploi : Affiche les éléments de l'ensemble
     // Contrat : Aucun
     //
-    virtual char* getVilleDepart() = 0;
+    virtual string & getVilleDepart() = 0;
     // Mode d'emploi : Renvoi la ville de départ
     // Contrat : Aucun
     //
-    virtual char* getVilleArrivee() = 0;
+    virtual string & getVilleArrivee() = 0;
     // Mode d'emploi : Renvoi la ville d'arrivée
     // Contrat : Aucun
     //

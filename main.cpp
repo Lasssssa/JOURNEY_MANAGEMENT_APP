@@ -1,6 +1,4 @@
 #include <iostream>
-
-//Initial commit : 1
 #include "Catalogue.h"
 
 using namespace std;

@@ -6,6 +6,7 @@
 //-------------------------------------------------------- Interfaces utilisées
 #include "Trajet.h"
 #include "Cellule.h"
+#include <fstream>
 
 //------------------------------------------------------------- Constantes
 
@@ -40,6 +41,8 @@ public:
     Cellule* GetTail();
     // Mode d'emploi : Renvoi la queue de la collection
     // Contrat : Aucun
+
+    int GetTaille();
 //---------------------------------------------------------------Surcharge d'opérateurs
 
 //-----------------------------------------------------Constructeurs - Destructeur
@@ -55,9 +58,9 @@ public:
     // Mode d'emploi :
     // Contrat :
 
-    void RechercheSimple(char *villeDepart, char *villeArrivee);
+    void RechercheSimple(const string &villeDepart, const string &villeArrivee);
 
-    void RechercheComplexe(char *villeDepart, char *villeArrivee);
+    void RechercheComplexe(const string &villeDepart, const string &villeArrivee);
 
 //------------------------------------------------------------------ PRIVE
 protected:
@@ -74,7 +77,7 @@ protected:
 
 //-------------------------------- Autres définitions dépendantes de <Classe>
 
-void RechercheComplexeRecursive(Cellule *head, Cellule *courante, char* villeArrivee, Collection* collection);
+void RechercheComplexeRecursive(Cellule *head, Cellule *courante, const string & villeArrivee, Collection* collection);
 
 bool isPresent(Trajet* t, Collection* collection);
 

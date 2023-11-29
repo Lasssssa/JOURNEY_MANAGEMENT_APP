@@ -24,19 +24,19 @@ void TrajetCompose::Afficher()
 
 }
 
-char* TrajetCompose::getVilleDepart()
+string & TrajetCompose::getVilleDepart()
 {
     return this->listeTrajets->GetHead()->t->getVilleDepart();
 }
 
-char* TrajetCompose::getVilleArrivee()
+string & TrajetCompose::getVilleArrivee()
 {
     return this->listeTrajets->GetTail()->t->getVilleArrivee();
 }
 
 void TrajetCompose::Ecrire(ofstream& fichier)
 {
-    fichier << "C;" << Taille() << ";" << listeTrajets->GetHead()->t->getVilleDepart() << ";" << listeTrajets->GetTail()->t->getVilleArrivee() << endl;
+    fichier << "C;" << this->listeTrajets->GetTaille() << ";" << listeTrajets->GetHead()->t->getVilleDepart() << ";" << listeTrajets->GetTail()->t->getVilleArrivee() << endl;
     Cellule* current = listeTrajets->GetHead();
     while(current != nullptr){
         current->t->Ecrire(fichier);
@@ -79,14 +79,5 @@ TrajetCompose* TrajetCompose::Copie()
 }
 //------------------------------------------------------------------ PRIVE
 
-int TrajetCompose::Taille(){
-    int taille = 0;
-    Cellule* current = listeTrajets->GetHead();
-    while(current != nullptr){
-        taille++;
-        current = current->suivant;
-    }
-    return taille;
-}
 
 //----------------------------------------------------- Méthodes protégées
