@@ -291,7 +291,8 @@ void Catalogue::ImporterTrajets() {
 }
 
 
-void Catalogue::importerTousTrajets(ifstream &fichier) {
+void Catalogue::importerTousTrajets(ifstream &fichier, bool trajetSimple, bool trajetCompose, const string & villeDepart,const string & villeArrivee )
+{
     stringstream ss;
     string ligne = "";
     string type = "";
@@ -301,61 +302,153 @@ void Catalogue::importerTousTrajets(ifstream &fichier) {
     while(getline(fichier, ligne)){
         ss = stringstream(ligne);
         getline(ss, type, ';');
-        if(type == "S"){
+        if(type == "S" && trajetSimple){
             getline(ss, depart, ';');
             getline(ss, moyen, ';');
             getline(ss, arrivee, ';');
             depart.erase(depart.find_last_not_of(" \t\r\n") + 1);
             moyen.erase(moyen.find_last_not_of(" \t\r\n") + 1);
             arrivee.erase(arrivee.find_last_not_of(" \t\r\n") + 1);
+//            if(villeDepart != "" && villeArrivee != ""){
+//                if(depart == villeDepart && arrivee == villeArrivee){
+//                    c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
+//                }
+//            }else if(villeDepart != ""){
+//                if(depart == villeDepart){
+//                    c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
+//                }
+//            }else if(villeArrivee != ""){
+//                if(arrivee == villeArrivee){
+//                    c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
+//                }
+//            }else{
+//                c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
+//            }
             c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
-        }else if(type == "C"){
-            string nbLigne ;
+        }else if(type == "C") {
+            string nbLigne;
+            string departPremier;
+            string arriveeDernier;
             getline(ss, nbLigne, ';');
+            getline(ss, departPremier, ';');
+            getline(ss, arriveeDernier, ';');
+//            nbLigne.erase(depart.find_last_not_of(" \t\r\n") + 1);
+//            departPremier.erase(moyen.find_last_not_of(" \t\r\n") + 1);
+//            arriveeDernier.erase(arrivee.find_last_not_of(" \t\r\n") + 1);
             int nbTrajet = stoi(nbLigne);
-            Collection* listeTrajet = new Collection();
-            for(int i = 0; i < nbTrajet; i++)
-            {
-                getline(fichier, ligne);
-                ss = stringstream(ligne);
-                getline(ss, type, ';');
-                getline(ss, depart, ';');
-                getline(ss, moyen, ';');
-                getline(ss, arrivee, ';');
-                type.erase(type.find_last_not_of(" \t\r\n") + 1);
-                depart.erase(depart.find_last_not_of(" \t\r\n") + 1);
-                moyen.erase(moyen.find_last_not_of(" \t\r\n") + 1);
-                arrivee.erase(arrivee.find_last_not_of(" \t\r\n") + 1);
-                listeTrajet->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
+            if(trajetCompose){
+                Collection *listeTrajet = new Collection();
+                for (int i = 0; i < nbTrajet; i++) {
+                    getline(fichier, ligne);
+                    ss = stringstream(ligne);
+                    getline(ss, type, ';');
+                    getline(ss, depart, ';');
+                    getline(ss, moyen, ';');
+                    getline(ss, arrivee, ';');
+                    type.erase(type.find_last_not_of(" \t\r\n") + 1);
+                    depart.erase(depart.find_last_not_of(" \t\r\n") + 1);
+                    moyen.erase(moyen.find_last_not_of(" \t\r\n") + 1);
+                    arrivee.erase(arrivee.find_last_not_of(" \t\r\n") + 1);
+                    listeTrajet->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
+                }
+                TrajetCompose *trajetCompose = new TrajetCompose(listeTrajet);
+                c->AjouterFin(trajetCompose);
+            }else{
+                for (int i = 0; i < nbTrajet; i++) {
+                    getline(fichier, ligne);
+                }
             }
-            TrajetCompose *trajetCompose = new TrajetCompose(listeTrajet);
-            c->AjouterFin(trajetCompose);
         }
     }
 }
 
 int Catalogue::menuTypeImport(){
-    cout << "------------------------------------------" << endl;
-    cout << "1. Importer tous les trajets simples" << endl;
-    cout << "2. Importer tous les trajets composés" << endl;
-    cout << "3. Importer tous les trajets" << endl;
-    cout << "--> Votre choix : ";
     int choix;
-    cin >> choix;
-    if(cin.fail()){
-        cin.clear();
-        cin.ignore();
-        choix = 0;
-    }
+    do{
+        cout << "------------------------------------------" << endl;
+        cout << "1. Importer tous les trajets simples" << endl;
+        cout << "2. Importer tous les trajets composés" << endl;
+        cout << "3. Importer tous les trajets" << endl;
+        cout << "--> Votre choix : ";
+        cin >> choix;
+        if(cin.fail()){
+            cin.clear();
+            cin.ignore();
+            choix = 0;
+        }
+    }while(choix < 1 || choix > 3);
     return choix;
 }
 
 void Catalogue::importerTrajetsSelonType(ifstream &fichier){
     int type = menuTypeImport();
+    switch (type) {
+        case 1:
+            importerTousTrajets(fichier, true, false);
+            break;
+        case 2:
+            importerTousTrajets(fichier, false, true);
+            break;
+        case 3:
+            importerTousTrajets(fichier);
+            break;
+        default:
+            cout << "Erreur de saisie" << endl;
+            break;
+    }
+}
+
+int Catalogue::menuVilleImport(){
+    int choix;
+    do{
+        cout << "------------------------------------------" << endl;
+        cout << "1. Importer selon une ville de départ" << endl;
+        cout << "2. Importer selon une ville d'arrivée " << endl;
+        cout << "3. Importer selon une ville de départ et d'arrivée" << endl;
+        cout << "--> Votre choix : ";
+        cin >> choix;
+        if(cin.fail()){
+            cin.clear();
+            cin.ignore();
+            choix = 0;
+        }
+    }while(choix < 1 || choix > 3);
+    return choix;
 }
 
 void Catalogue::importerTrajetsSelonVille(ifstream &fichier){
-
+    int type = menuVilleImport();
+    string ville = "";
+    string depart = "";
+    string arrive = "";
+    switch (type) {
+        case 1:
+            cout << "Choix de la ville de départ : " << endl;
+            cin >> ws;
+            getline(cin, ville);
+            importerTousTrajets(fichier, true, true,ville);
+            break;
+        case 2:
+            cout << "Choix de la ville d'arrivée : " << endl;
+            cin >> ws;
+            getline(cin, ville);
+            importerTousTrajets(fichier, false, true,"",ville);
+            break;
+        case 3:
+            cout << "Choix de la ville de départ : " << endl;
+            cin >> ws;
+            getline(cin, ville);
+            depart = ville;
+            cout << "Choix de la ville d'arrivée : " << endl;
+            cin >> ws;
+            getline(cin, ville);
+            arrive = ville;
+            importerTousTrajets(fichier,true,true,depart,arrive);
+            break;
+        default:
+            cout << "Erreur de saisie" << endl;
+            break;
+    }
 }
 
 void Catalogue::importerTrajetsSelonIntervalle(ifstream &fichier){

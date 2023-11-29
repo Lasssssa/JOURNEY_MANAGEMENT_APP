@@ -58,6 +58,8 @@ protected:
 
     int menuTypeImport();
 
+    int menuVilleImport();
+
     int menuImport();
     // type méthode ( liste des paramètres );
     // Mode d'emploi :
@@ -83,7 +85,9 @@ protected:
     // Mode d'emploi : Ajoute un trajet composé au catalogue
     // Contrat : Aucun
 
-    void importerTousTrajets(ifstream &fichier);
+    void importerTousTrajets(ifstream &fichier, bool trajetSimple= true,
+                             bool trajetCompose= true, const string & villeDepart = "",
+                             const string & villeArrivee = "");
 
     void importerTrajetsSelonType(ifstream &fichier);
 
