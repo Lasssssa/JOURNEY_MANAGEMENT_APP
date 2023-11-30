@@ -257,7 +257,6 @@ void Catalogue::ImporterTrajets() {
     stringstream ss;
     if(fichier) {
         string premierLigne = "";
-
         getline(fichier, premierLigne);
         ss = stringstream(premierLigne);
         string nbTrajetSimple = "";
