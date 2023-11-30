@@ -234,7 +234,7 @@ void Catalogue::ExporterTrajets() {
     cin >> nomDuFichier;
     nomDuFichier = nomDuFichier + ".scar";
     ofstream fichier(nomDuFichier, ios::out);
-    fichier << c->GetTaille() << ";" << c->GetTaille() << endl;
+    fichier << c->GetTaille() << endl;
     Cellule *current = c->GetHead();
     while (current != nullptr) {
         current->t->Ecrire(fichier);
@@ -256,15 +256,10 @@ void Catalogue::ImporterTrajets() {
     ifstream fichier(nomFichier, ios::in);
     stringstream ss;
     if(fichier) {
-        string premierLigne = "";
-        getline(fichier, premierLigne);
-        ss = stringstream(premierLigne);
-        string nbTrajetSimple = "";
-        string nbTrajetCompose = "";
-        getline(ss, nbTrajetSimple, ';');
-        getline(ss, nbTrajetCompose, ';');
-        int nbTrajetsSimple = stoi(nbTrajetSimple);
-        int nbTrajetsCompose = stoi(nbTrajetCompose);
+        string nbTotalTrajet = "";
+
+        getline(fichier, nbTotalTrajet);
+        cout << nbTotalTrajet << endl;
         int choix = menuImport();
         switch (choix) {
             case 1:
