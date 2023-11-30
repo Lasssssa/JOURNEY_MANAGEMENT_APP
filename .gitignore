@@ -2,8 +2,9 @@
 /.idea/
 /.vscode/
 
-# Compiled Source #
+# Executable #
 prog
+*.exe
 
 # Compiled Files #
 *.o
