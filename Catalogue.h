@@ -96,6 +96,9 @@ protected:
     void importerTrajetsSelonIntervalle(ifstream &fichier);
     void menuExport();
 
+    void AjouterTrajetComposeFromFile(ifstream &fichier, int nbTrajet, const string & villeDepart, const string & villeArrivee);
+
+    void skipLines(ifstream &fichier, int nbLines);
 //-------------------------------------------------------------Attributs protégés
     Collection *c;
 

@@ -257,9 +257,9 @@ void Catalogue::ImporterTrajets() {
     stringstream ss;
     if(fichier) {
         string nbTotalTrajet = "";
-
         getline(fichier, nbTotalTrajet);
         cout << nbTotalTrajet << endl;
+        int nbTrajet = stoi(nbTotalTrajet);
         int choix = menuImport();
         switch (choix) {
             case 1:
@@ -303,22 +303,21 @@ void Catalogue::importerTousTrajets(ifstream &fichier, bool trajetSimple, bool t
             depart.erase(depart.find_last_not_of(" \t\r\n") + 1);
             moyen.erase(moyen.find_last_not_of(" \t\r\n") + 1);
             arrivee.erase(arrivee.find_last_not_of(" \t\r\n") + 1);
-//            if(villeDepart != "" && villeArrivee != ""){
-//                if(depart == villeDepart && arrivee == villeArrivee){
-//                    c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
-//                }
-//            }else if(villeDepart != ""){
-//                if(depart == villeDepart){
-//                    c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
-//                }
-//            }else if(villeArrivee != ""){
-//                if(arrivee == villeArrivee){
-//                    c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
-//                }
-//            }else{
-//                c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
-//            }
-            c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
+            if(villeDepart != "" && villeArrivee != ""){
+                if(depart == villeDepart && arrivee == villeArrivee){
+                    c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
+                }
+            }else if(villeDepart != ""){
+                if(depart == villeDepart){
+                    c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
+                }
+            }else if(villeArrivee != ""){
+                if(arrivee == villeArrivee){
+                    c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
+                }
+            }else{
+                c->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
+            }
         }else if(type == "C") {
             string nbLigne;
             string departPremier;
@@ -326,34 +325,70 @@ void Catalogue::importerTousTrajets(ifstream &fichier, bool trajetSimple, bool t
             getline(ss, nbLigne, ';');
             getline(ss, departPremier, ';');
             getline(ss, arriveeDernier, ';');
-//            nbLigne.erase(depart.find_last_not_of(" \t\r\n") + 1);
-//            departPremier.erase(moyen.find_last_not_of(" \t\r\n") + 1);
-//            arriveeDernier.erase(arrivee.find_last_not_of(" \t\r\n") + 1);
+            nbLigne.erase(nbLigne.find_last_not_of(" \t\r\n") + 1);
+            departPremier.erase(departPremier.find_last_not_of(" \t\r\n") + 1);
+            arriveeDernier.erase(arriveeDernier.find_last_not_of(" \t\r\n") + 1);
             int nbTrajet = stoi(nbLigne);
             if(trajetCompose){
-                Collection *listeTrajet = new Collection();
-                for (int i = 0; i < nbTrajet; i++) {
-                    getline(fichier, ligne);
-                    ss = stringstream(ligne);
-                    getline(ss, type, ';');
-                    getline(ss, depart, ';');
-                    getline(ss, moyen, ';');
-                    getline(ss, arrivee, ';');
-                    type.erase(type.find_last_not_of(" \t\r\n") + 1);
-                    depart.erase(depart.find_last_not_of(" \t\r\n") + 1);
-                    moyen.erase(moyen.find_last_not_of(" \t\r\n") + 1);
-                    arrivee.erase(arrivee.find_last_not_of(" \t\r\n") + 1);
-                    listeTrajet->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
+                if(villeDepart != "" && villeArrivee != ""){
+                    if(departPremier == villeDepart && arriveeDernier == villeArrivee){
+                        AjouterTrajetComposeFromFile(fichier, nbTrajet, departPremier, arriveeDernier);
+                    }else{
+                        skipLines(fichier, nbTrajet);
+                    }
+                }else if(villeDepart != ""){
+                    if(departPremier == villeDepart){
+                        AjouterTrajetComposeFromFile(fichier, nbTrajet, departPremier, arriveeDernier);
+                    }else{
+                        skipLines(fichier, nbTrajet);
+                    }
+                }else if(villeArrivee != ""){
+                    if(arriveeDernier == villeArrivee){
+                        AjouterTrajetComposeFromFile(fichier, nbTrajet, departPremier, arriveeDernier);
+                    }else{
+                        skipLines(fichier, nbTrajet);
+                    }
+                }else{
+                    AjouterTrajetComposeFromFile(fichier, nbTrajet, departPremier, arriveeDernier);
                 }
-                TrajetCompose *trajetCompose = new TrajetCompose(listeTrajet);
-                c->AjouterFin(trajetCompose);
             }else{
-                for (int i = 0; i < nbTrajet; i++) {
-                    getline(fichier, ligne);
-                }
+                skipLines(fichier, nbTrajet);
             }
         }
     }
+}
+
+void Catalogue::skipLines(ifstream &fichier, int nbLines) {
+    string ligne = "";
+    for (int i = 0; i < nbLines; i++) {
+        getline(fichier, ligne);
+    }
+}
+
+void Catalogue::AjouterTrajetComposeFromFile(ifstream &fichier, int nbTrajet, const string &villeDepart,
+                                             const string &villeArrivee) {
+    string ligne = "";
+    string type = "";
+    string depart = "";
+    string moyen = "";
+    string arrivee = "";
+    stringstream ss;
+    Collection *listeTrajet = new Collection();
+    for (int i = 0; i < nbTrajet; i++) {
+        getline(fichier, ligne);
+        ss = stringstream(ligne);
+        getline(ss, type, ';');
+        getline(ss, depart, ';');
+        getline(ss, moyen, ';');
+        getline(ss, arrivee, ';');
+        type.erase(type.find_last_not_of(" \t\r\n") + 1);
+        depart.erase(depart.find_last_not_of(" \t\r\n") + 1);
+        moyen.erase(moyen.find_last_not_of(" \t\r\n") + 1);
+        arrivee.erase(arrivee.find_last_not_of(" \t\r\n") + 1);
+        listeTrajet->AjouterFin(new TrajetSimple(depart, arrivee, moyen));
+    }
+    TrajetCompose *trajetCompose = new TrajetCompose(listeTrajet);
+    c->AjouterFin(trajetCompose);
 }
 
 int Catalogue::menuTypeImport(){
