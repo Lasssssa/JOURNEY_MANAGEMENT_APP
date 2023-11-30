@@ -37,6 +37,19 @@ public:
 
     void ImporterTrajets();
 
+    void importerTousTrajets(int nbTrajet, ifstream &fichier, bool trajetSimple= true,
+                             bool trajetCompose= true, const string & villeDepart = "",
+                             const string & villeArrivee = "", int n = 0, int m = 0);
+
+    void importerTrajetsSelonType(ifstream &fichier, int nbTrajet);
+
+    void importerTrajetsSelonVille(ifstream &fichier, int nbTrajet);
+
+    void importerTrajetsSelonIntervalle(ifstream &fichier, int nbTrajets);
+
+    void importerTrajetSimple(stringstream& ss, const string &villeDepart, const string &villeArrivee);
+    void importTrajetCompose(stringstream& ss, const string &villeDepart, const string &villeArrivee,bool trajetCompose, ifstream &fichier);
+
 //---------------------------------------------------------------Surcharge d'opérateurs
 
 //-----------------------------------------------------Constructeurs - Destructeur
@@ -85,20 +98,13 @@ protected:
     // Mode d'emploi : Ajoute un trajet composé au catalogue
     // Contrat : Aucun
 
-    void importerTousTrajets(ifstream &fichier, bool trajetSimple= true,
-                             bool trajetCompose= true, const string & villeDepart = "",
-                             const string & villeArrivee = "");
-
-    void importerTrajetsSelonType(ifstream &fichier);
-
-    void importerTrajetsSelonVille(ifstream &fichier);
-
-    void importerTrajetsSelonIntervalle(ifstream &fichier);
     void menuExport();
 
     void AjouterTrajetComposeFromFile(ifstream &fichier, int nbTrajet, const string & villeDepart, const string & villeArrivee);
 
     void skipLines(ifstream &fichier, int nbLines);
+
+    void skipTrajet(ifstream &fichier);
 //-------------------------------------------------------------Attributs protégés
     Collection *c;
 
