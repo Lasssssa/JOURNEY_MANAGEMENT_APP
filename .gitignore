@@ -1,5 +1,9 @@
+# IDE #
 /.idea/
 /.vscode/
+
+# Compiled Source #
+prog
 
 # Compiled Files #
 *.o
