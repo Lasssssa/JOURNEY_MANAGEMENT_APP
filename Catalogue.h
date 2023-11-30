@@ -29,15 +29,13 @@ public:
     // Mode d'emploi : Ajoute un trajet au catalogue
     // Contrat :
 
-    void Menu();
-
     void RechercherTrajet();
 
     void ExporterTrajets();
 
     void ImporterTrajets();
 
-    void importerTousTrajets(int nbTrajet, ifstream &fichier, bool trajetSimple= true,
+    void importerTrajetDepuisFichier(int nbTrajet, ifstream &fichier, bool trajetSimple= true,
                              bool trajetCompose= true, const string & villeDepart = "",
                              const string & villeArrivee = "", int n = 0, int m = 0);
 
@@ -46,9 +44,6 @@ public:
     void importerTrajetsSelonVille(ifstream &fichier, int nbTrajet);
 
     void importerTrajetsSelonIntervalle(ifstream &fichier, int nbTrajets);
-
-    void importerTrajetSimple(stringstream& ss, const string &villeDepart, const string &villeArrivee);
-    void importTrajetCompose(stringstream& ss, const string &villeDepart, const string &villeArrivee,bool trajetCompose, ifstream &fichier);
 
 //---------------------------------------------------------------Surcharge d'opérateurs
 
@@ -105,6 +100,12 @@ protected:
     void skipLines(ifstream &fichier, int nbLines);
 
     void skipTrajet(ifstream &fichier);
+
+    void Menu();
+
+    void importerTrajetSimple(stringstream& ss, const string &villeDepart, const string &villeArrivee);
+
+    void importTrajetCompose(stringstream& ss, const string &villeDepart, const string &villeArrivee,bool trajetCompose, ifstream &fichier);
 //-------------------------------------------------------------Attributs protégés
     Collection *c;
 
