@@ -135,7 +135,7 @@ void Catalogue::ExporterTrajets() {
                 Catalogue::ExporterTrajetssSelonType(fichier);
                 break;
             case 3:
-                //importerTrajetsSelonVille(fichier, nbTrajet);
+                Catalogue::ExporterTrajetssSelonVille(fichier);
             break;
             case 4:
                 //importerTrajetsSelonIntervalle(fichier, nbTrajet);
@@ -278,6 +278,102 @@ void Catalogue::importerTrajetsSelonVille(ifstream &fichier, int nbTrajet){
             break;
     }
 }
+
+void Catalogue::ExporterTrajetssSelonVille(ofstream &fichier){
+    int type = menuVilleExport();
+    string ville = "";
+    string depart = "";
+    string arrive = "";
+    switch (type) {
+        case 1:
+            cout << "Choix de la ville de départ : " << endl;
+            cin >> ws;
+            getline(cin, ville);
+            EcrireVilleDepartArrivee(fichier, ville, "");
+            break;
+        case 2:
+            cout << "Choix de la ville d'arrivée : " << endl;
+            cin >> ws;
+            getline(cin, ville);
+            EcrireVilleDepartArrivee(fichier, "", ville);
+            break;
+        case 3:
+            cout << "Choix de la ville de départ : " << endl;
+            cin >> ws;
+            getline(cin, ville);
+            depart = ville;
+            cout << "Choix de la ville d'arrivée : " << endl;
+            cin >> ws;
+            getline(cin, ville);
+            arrive = ville;
+            EcrireVilleDepartArrivee(fichier, depart, arrive);
+            break;
+        default:
+            cout << "Erreur de saisie" << endl;
+            break;
+    }
+}
+
+void Catalogue::EcrireVilleDepartArrivee(ofstream &fichier, string villeDepart, string villeArrivee){
+    if(villeDepart != "" && villeArrivee != ""){
+        int compt = 0;
+        Cellule *current = c->GetHead();
+        while (current != nullptr) {
+            if ((current->t->getVilleDepart() == villeDepart) && (current->t->getVilleArrivee() == villeArrivee)) {
+                compt++;
+            }
+            current = current->suivant;
+        }
+        fichier << compt << endl;
+        cout << compt << " ville trouvées" << endl;
+        Cellule *current_sec = c->GetHead();
+        while (current_sec != nullptr) {
+            if ((current_sec->t->getVilleDepart() == villeDepart) && (current_sec->t->getVilleArrivee() == villeArrivee)) {
+                current_sec->t->Ecrire(fichier);
+            }
+            current_sec = current_sec->suivant;
+        }
+    }else if(villeDepart != ""){
+        int compt = 0;
+        Cellule *current = c->GetHead();
+        while (current != nullptr) {
+            if (current->t->getVilleDepart() == villeDepart) {
+                compt++;
+            }
+            current = current->suivant;
+        }
+        fichier << compt << endl;
+        cout << compt << " ville trouvées" << endl;
+        Cellule *current_sec = c->GetHead();
+        while (current_sec != nullptr) {
+            if (current_sec->t->getVilleDepart() == villeDepart) {
+                current_sec->t->Ecrire(fichier);
+            }
+            current_sec = current_sec->suivant;
+        }
+    }else if(villeArrivee != ""){
+        int compt = 0;
+        Cellule *current = c->GetHead();
+        while (current != nullptr) {
+            if (current->t->getVilleArrivee() == villeArrivee) {
+                compt++;
+            }
+            current = current->suivant;
+        }
+        fichier << compt << endl;
+        cout << compt << " ville trouvées" << endl;
+        Cellule *current_sec = c->GetHead();
+        while (current_sec != nullptr) {
+            if (current_sec->t->getVilleArrivee() == villeArrivee) {
+                current_sec->t->Ecrire(fichier);
+            }
+            current_sec = current_sec->suivant;
+        }
+    }else{
+        fichier << ";" << endl;
+    }
+}
+
 /**
  * Permet d'importer un intervalle de trajets
  * @param fichier
@@ -717,6 +813,24 @@ int Catalogue::menuVilleImport(){
         cout << "1. Importer selon une ville de départ" << endl;
         cout << "2. Importer selon une ville d'arrivée " << endl;
         cout << "3. Importer selon une ville de départ et d'arrivée" << endl;
+        cout << "--> Votre choix : ";
+        cin >> choix;
+        if(cin.fail()){
+            cin.clear();
+            cin.ignore();
+            choix = 0;
+        }
+    }while(choix < 1 || choix > 3);
+    return choix;
+}
+
+int Catalogue::menuVilleExport(){
+    int choix;
+    do{
+        cout << "------------------------------------------" << endl;
+        cout << "1. Exporter selon une ville de départ" << endl;
+        cout << "2. Exporter selon une ville d'arrivée " << endl;
+        cout << "3. Exporter selon une ville de départ et d'arrivée" << endl;
         cout << "--> Votre choix : ";
         cin >> choix;
         if(cin.fail()){

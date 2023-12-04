@@ -80,6 +80,8 @@ protected:
 
     int menuVilleImport();
 
+    int menuVilleExport();
+
     int menuImport();
     // type méthode ( liste des paramètres );
     // Mode d'emploi :
@@ -106,6 +108,8 @@ protected:
     // Contrat : Aucun
 
     int menuExport();
+
+    void EcrireVilleDepartArrivee(ofstream &fichier, string villeDepart, string villeArrivee);
 
     void AjouterTrajetComposeFromFile(ifstream &fichier, int nbTrajet, const string & villeDepart, const string & villeArrivee);
 
