@@ -68,7 +68,7 @@ void Catalogue::Menu()
                 ImporterTrajets();
             break;
             case 5:
-                menuExport();
+                ExporterTrajets();
             break;
             case 6:
                 cout << "Au revoir !" << endl;
@@ -126,9 +126,10 @@ void Catalogue::ExporterTrajets() {
     ofstream fichier(nomDuFichier, ios::out);
     if (fichier) {
         int choix = menuExport();
+        cout << choix << endl;
         switch (choix) {
             case 1:
-                Catalogue::ExporterTrajetsDansFichier(fichier, false, false);
+                Catalogue::ExporterTrajetsDansFichier(fichier, true, true);
                 break;
             case 2:
                 Catalogue::ExporterTrajetssSelonType(fichier);
@@ -139,6 +140,8 @@ void Catalogue::ExporterTrajets() {
             case 4:
                 //importerTrajetsSelonIntervalle(fichier, nbTrajet);
             break;
+            case 5:
+                break;
             default:
                 cout << "Erreur de saisie" << endl;
             break;
@@ -319,17 +322,45 @@ void Catalogue::ExporterTrajetsDansFichier(ofstream &fichier, bool simple, bool 
         }
     } else {
         if (simple) {
-            int compt;
+            int compt=0;
             Cellule *current = c->GetHead();
             while (current != nullptr) {
                 Trajet *dyn_t = dynamic_cast<TrajetSimple*>(current->t);
                 if (dyn_t != nullptr) {
-                    current->t->Ecrire(fichier);
-                    ++compt;
+                    compt++;
                 }
                 current = current->suivant;
             }
+            fichier << compt << endl;
+            Cellule *current_sec = c->GetHead();
+            while (current_sec != nullptr) {
+                Trajet *dyn_t = dynamic_cast<TrajetSimple*>(current_sec->t);
+                if (dyn_t != nullptr) {
+                    current_sec->t->Ecrire(fichier);
+                }
+                current_sec = current_sec->suivant;
+            }
 
+        }
+        else if (compose) {
+            int compt=0;
+            Cellule *current = c->GetHead();
+            while (current != nullptr) {
+                Trajet *dyn_t = dynamic_cast<TrajetCompose*>(current->t);
+                if (dyn_t != nullptr) {
+                    compt++;
+                }
+                current = current->suivant;
+            }
+            fichier << compt << endl;
+            Cellule *current_sec = c->GetHead();
+            while (current_sec != nullptr) {
+                Trajet *dyn_t = dynamic_cast<TrajetCompose*>(current_sec->t);
+                if (dyn_t != nullptr) {
+                    current_sec->t->Ecrire(fichier);
+                }
+                current_sec = current_sec->suivant;
+            }
         }
     }
 }
@@ -741,6 +772,6 @@ int Catalogue::menuExport() {
                 cin.ignore();
                 choix = 0;
             }
-    }while(choix < 1 || choix > 4);
+    }while(choix < 1 || choix > 5);
     return choix;
 }

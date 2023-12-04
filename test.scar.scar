@@ -1,0 +1,12 @@
+6
+S;Lyon;Pedalo;La Baule
+S;Marseille;Bus;Paris
+S;Nantes;Pied;Juan-les-Pins
+C;3;Bordeaux;Toulouse
+S;Bordeaux;Avion;Nanterre
+S;Nanterre;Bateau;Lyon
+S;Lyon;Trotinette Electrique;Toulouse
+C;2;Lyon;Lille
+S;Lyon;Nage;Reims
+S;Reims;Helicoptere;Lille
+S;Lille;Fusée;Lyon
