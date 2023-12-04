@@ -35,6 +35,14 @@ public:
 
     void ImporterTrajets();
 
+    void ExporterTrajetsDansFichier(ofstream &fichier, bool simple, bool compose);
+
+    void ExporterTrajetssSelonType(ofstream &fichier);
+
+    void ExporterTrajetssSelonVille(ofstream &fichier);
+
+    void ExporterTrajetssSelonIntervalle(ofstream &fichier);
+
     void importerTrajetDepuisFichier(int nbTrajet, ifstream &fichier, bool trajetSimple= true,
                              bool trajetCompose= true, const string & villeDepart = "",
                              const string & villeArrivee = "", int n = 0, int m = 0);
@@ -60,9 +68,13 @@ public:
     // Mode d'emploi :
     // Contrat :
 
+    void Menu();
+
 //------------------------------------------------------------------ PRIVE
 protected:
 //-----------------------------------------------------------Méthodes protégées
+
+    int menuTypeExport();
 
     int menuTypeImport();
 
@@ -93,15 +105,13 @@ protected:
     // Mode d'emploi : Ajoute un trajet composé au catalogue
     // Contrat : Aucun
 
-    void menuExport();
+    int menuExport();
 
     void AjouterTrajetComposeFromFile(ifstream &fichier, int nbTrajet, const string & villeDepart, const string & villeArrivee);
 
     void skipLines(ifstream &fichier, int nbLines);
 
     void skipTrajet(ifstream &fichier);
-
-    void Menu();
 
     void importerTrajetSimple(stringstream& ss, const string &villeDepart, const string &villeArrivee);
 

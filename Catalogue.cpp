@@ -40,6 +40,45 @@ Catalogue::~Catalogue()
 
 //----------------------------------------------------- Méthodes publiques
 
+/**
+ * Menu principal du catalogue / Fonctionnement du catalogue
+ */
+void Catalogue::Menu()
+{
+    int choix;
+    do {
+        printMenu();
+        cin >> choix;
+        if(cin.fail()){
+            cin.clear();
+            cin.ignore();
+            choix = 0;
+        }
+        switch (choix) {
+            case 1:
+                ajoutTrajet();
+            break;
+            case 2:
+                Afficher();
+            break;
+            case 3:
+                RechercherTrajet();
+            break;
+            case 4:
+                ImporterTrajets();
+            break;
+            case 5:
+                menuExport();
+            break;
+            case 6:
+                cout << "Au revoir !" << endl;
+            break;
+            default:
+                cout << "Erreur de saisie" << endl;
+            break;
+        }
+    } while (choix != 6);
+}
 
 void Catalogue::Afficher()
 {
@@ -85,13 +124,29 @@ void Catalogue::ExporterTrajets() {
     cin >> nomDuFichier;
     nomDuFichier = nomDuFichier + ".scar";
     ofstream fichier(nomDuFichier, ios::out);
-    fichier << c->GetTaille() << endl;
-    Cellule *current = c->GetHead();
-    while (current != nullptr) {
-        current->t->Ecrire(fichier);
-        current = current->suivant;
+    if (fichier) {
+        int choix = menuExport();
+        switch (choix) {
+            case 1:
+                Catalogue::ExporterTrajetsDansFichier(fichier, false, false);
+                break;
+            case 2:
+                Catalogue::ExporterTrajetssSelonType(fichier);
+                break;
+            case 3:
+                //importerTrajetsSelonVille(fichier, nbTrajet);
+            break;
+            case 4:
+                //importerTrajetsSelonIntervalle(fichier, nbTrajet);
+            break;
+            default:
+                cout << "Erreur de saisie" << endl;
+            break;
+        }
+        fichier.close();
+    }else {
+        cout << "Erreur lors de l'ouverture du fichier" << endl;
     }
-    fichier.close();
 }
 
 void Catalogue::ImporterTrajets() {
@@ -220,7 +275,6 @@ void Catalogue::importerTrajetsSelonVille(ifstream &fichier, int nbTrajet){
             break;
     }
 }
-
 /**
  * Permet d'importer un intervalle de trajets
  * @param fichier
@@ -253,6 +307,49 @@ void Catalogue::importerTrajetsSelonIntervalle(ifstream &fichier, int nbTrajets)
     }while(n > m || n < 0 || m >= nbTrajets);
     importerTrajetDepuisFichier(nbTrajets, fichier, true, true, "", "", n, m);
 
+}
+
+void Catalogue::ExporterTrajetsDansFichier(ofstream &fichier, bool simple, bool compose) {
+    if (simple && compose) {
+        fichier << c->GetTaille() << endl;
+        Cellule *current = c->GetHead();
+        while (current != nullptr) {
+            current->t->Ecrire(fichier);
+            current = current->suivant;
+        }
+    } else {
+        if (simple) {
+            int compt;
+            Cellule *current = c->GetHead();
+            while (current != nullptr) {
+                Trajet *dyn_t = dynamic_cast<TrajetSimple*>(current->t);
+                if (dyn_t != nullptr) {
+                    current->t->Ecrire(fichier);
+                    ++compt;
+                }
+                current = current->suivant;
+            }
+
+        }
+    }
+}
+
+void Catalogue::ExporterTrajetssSelonType(ofstream &fichier){
+    int type = menuTypeExport();
+    switch (type) {
+        case 1:
+            ExporterTrajetsDansFichier(fichier, true, false);
+        break;
+        case 2:
+            ExporterTrajetsDansFichier(fichier, false, true);
+        break;
+        case 3:
+            ExporterTrajetsDansFichier(fichier, true, true);
+        break;
+        default:
+            cout << "Erreur de saisie" << endl;
+        break;
+    }
 }
 //------------------------------------------------------------------ PRIVE
 
@@ -294,45 +391,7 @@ void Catalogue::importerTrajetSimple(stringstream & ss, const string &villeDepar
     }
 }
 
-/**
- * Menu principal du catalogue / Fonctionnement du catalogue
- */
-void Catalogue::Menu()
-{
-    int choix;
-    do {
-        printMenu();
-        cin >> choix;
-        if(cin.fail()){
-            cin.clear();
-            cin.ignore();
-            choix = 0;
-        }
-        switch (choix) {
-            case 1:
-                ajoutTrajet();
-                break;
-            case 2:
-                Afficher();
-                break;
-            case 3:
-                RechercherTrajet();
-                break;
-            case 4:
-                ImporterTrajets();
-                break;
-            case 5:
-                menuExport();
-                break;
-            case 6:
-                cout << "Au revoir !" << endl;
-                break;
-            default:
-                cout << "Erreur de saisie" << endl;
-                break;
-        }
-    } while (choix != 6);
-}
+
 
 /**
  * Affiche le menu du catalogue : Affichage
@@ -597,6 +656,25 @@ int Catalogue::menuTypeImport(){
     return choix;
 }
 
+int Catalogue::menuTypeExport() {
+    int choix;
+    do{
+        cout << "------------------------------------------" << endl;
+        cout << "1. Exporter tous les trajets simples" << endl;
+        cout << "2. Exporter tous les trajets composés" << endl;
+        cout << "3. Exporter tous les trajets" << endl;
+        cout << "--> Votre choix : ";
+        cin >> choix;
+        if(cin.fail()){
+            cin.clear();
+            cin.ignore();
+            choix = 0;
+        }
+    }while(choix < 1 || choix > 3);
+    return choix;
+}
+
+
 /*
  * Menu d'importation par ville
  * Permet de choisir si on importe selon la ville de départ, la ville d'arrivée ou les deux
@@ -646,35 +724,23 @@ int Catalogue::menuImport() {
 /*
  * Menu d'exportation
  */
-void Catalogue::menuExport() {
-    cout << "-----------------------------------------" << endl;
-    cout << "1. Exporter tous les trajets" << endl;
-    cout << "2. Exporter selon le type de trajets" << endl;
-    cout << "3. Exporter selon la ville de départ et/ou la ville d'arrivée" << endl;
-    cout << "4. Exporter selon une selection de trajets" << endl;
-    cout << "5. Retour" << endl;
-    cout << "-----------------------------------------" << endl;
-    cout << "Votre choix : ";
+int Catalogue::menuExport() {
     int choix;
-    cin >> choix;
-    switch (choix) {
-        case 1:
-            Catalogue::ExporterTrajets();
-            break;
-        case 2:
-            //exporter selon le type de trajets
-            break;
-        case 3:
-            //exporter selon la ville de départ et/ou la ville d'arrivée
-            break;
-        case 4:
-            //exporter selon une selection de trajets
-            break;
-        case 5:
-            //retour
-            break;
-        default:
-            cout << "Erreur de saisie" << endl;
-            break;
-    }
+    do{
+        cout << "-----------------------------------------" << endl;
+        cout << "1. Exporter tous les trajets" << endl;
+        cout << "2. Exporter selon le type de trajets" << endl;
+        cout << "3. Exporter selon la ville de départ et/ou la ville d'arrivée" << endl;
+        cout << "4. Exporter selon une selection de trajets" << endl;
+        cout << "5. Retour" << endl;
+        cout << "-----------------------------------------" << endl;
+        cout << "Votre choix : ";
+        cin >> choix;
+        if(cin.fail()){
+                cin.clear();
+                cin.ignore();
+                choix = 0;
+            }
+    }while(choix < 1 || choix > 4);
+    return choix;
 }
